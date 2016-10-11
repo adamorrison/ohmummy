@@ -451,14 +451,14 @@ var Engine = (function(global) {
               location.reload(true);
             }
         }
-        else if(allowedKeys == 'p') {
+        /*else if(allowedKeys == 'p') {
             if(gameState.current==='game') {
                 gameState.pause();
             }
             else {
                 gameState.unpause();
             }
-        }
+        }*/
     }
 
 window.addEventListener('load', resize, false);
