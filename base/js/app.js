@@ -1,6 +1,9 @@
 /*
  * CREDITS: 
- * https://github.com/walesmd/uda-frogger (Udacity for base code/engine)
+ * https://github.com/jriecken/sat-js (jrieken for the 2d collision),
+ * https://github.com/jakesgordon/javascript-state-machine/ (jakesgordon for the state machine),
+ * https://jquery.com/
+ * https://github.com/walesmd/uda-frogger (Udacity for base code/engine),
  * http://opengameart.org/content/flare-hud (Mumu for the hud elements), 
  * http://jessefreeman.com/articles/free-game-art-tile-crusader/ (Jesse Freeman for the character/wall tiles sprites) & 
  * http://7soul1.deviantart.com/art/420-Pixel-Art-Icons-for-RPG-129892453 (7Soul1 for the item icons)
