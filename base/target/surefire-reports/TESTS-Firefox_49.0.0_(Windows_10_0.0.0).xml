@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<testsuite name="Firefox 49.0.0 (Windows 10 0.0.0)" package="" timestamp="2016-10-11T13:23:44" id="0" hostname="developer" tests="8" errors="0" failures="0" time="0.037">
+  <properties>
+    <property name="browser.fullName" value="Mozilla/5.0 (Windows NT 10.0; WOW64; rv:49.0) Gecko/20100101 Firefox/49.0"/>
+  </properties>
+  <testcase name=" enemy-CalculatePossibleMoves" time="0.005" classname="Firefox_49_0_0_(Windows_10_0_0_0).undefined"/>
+  <testcase name=" enemy-calculateBestAxis" time="0.004" classname="Firefox_49_0_0_(Windows_10_0_0_0).undefined"/>
+  <testcase name=" enemy-calculateBestRemainingDirection" time="0.002" classname="Firefox_49_0_0_(Windows_10_0_0_0).undefined"/>
+  <testcase name=" player-step collisions" time="0.015" classname="Firefox_49_0_0_(Windows_10_0_0_0).undefined"/>
+  <testcase name=" player-gameboard collisions-right" time="0.004" classname="Firefox_49_0_0_(Windows_10_0_0_0).undefined"/>
+  <testcase name=" player-gameboard collisions-down" time="0.003" classname="Firefox_49_0_0_(Windows_10_0_0_0).undefined"/>
+  <testcase name=" player-tomb collisions" time="0.003" classname="Firefox_49_0_0_(Windows_10_0_0_0).undefined"/>
+  <testcase name=" player-item collisions" time="0.001" classname="Firefox_49_0_0_(Windows_10_0_0_0).undefined"/>
+  <system-out>
+    <![CDATA[
+]]>
+  </system-out>
+  <system-err/>
+</testsuite>

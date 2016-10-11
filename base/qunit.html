@@ -1,0 +1,393 @@
+<!doctype html>
+<html>
+<head>
+
+</head>
+<body>
+  
+  <div id="qunit"></div>
+
+  <meta charset="utf-8">
+  <title>Oh Mummy! Functional Tests</title>
+ 
+  <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-1.23.1.css">
+  <script src="https://code.jquery.com/qunit/qunit-1.23.1.js"></script>
+  
+  <script src="js/state-machine.min.js"></script>
+  <script src="js/SAT.min.js"></script>
+  <script src="js/resources.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/engine.js"></script>
+ 
+  <!QUNIT TESTS>
+  <script>
+
+  var stepsOn = 0;
+  //var itemsFound = 0;
+
+  function reset() {
+    //player.x=0;
+    //player.y=0;
+    stepsOn=0;
+    //reloadJs('js/app.js');
+    //LoadMyJs('js/app.js');
+  }
+
+    //<script type="text/javascript">
+function LoadMyJs(scriptName) {
+var docHeadObj = document.getElementsByTagName("head")[0];
+var dynamicScript = document.createElement("script");
+dynamicScript.type = "text/javascript";
+dynamicScript.src = scriptName;
+docHeadObj.appendChild(dynamicScript);
+}
+
+
+  function reloadJs(src) {
+    src = $('script[src$="' + src + '"]').attr("src");
+    $('script[src$="' + src + '"]').remove();
+    $('<script/>').attr('src', src).appendTo('body');
+  }
+
+  function move(direction, amount) {
+      for(i=0;i<amount;i++) {
+        switch(direction) {
+            case "right":
+              player.handleInput("right");
+            break;
+            case "left":
+              player.handleInput("left");
+            break;
+            case "down":
+              player.handleInput("down");
+            break;
+            case "up":
+              player.handleInput("up");
+            break;
+            default:
+            // nothing
+        }
+    }
+  }
+
+  function coverBoard() {
+      // criss-cross the board in the vertical
+    move("left", 3);
+    move("up",18);
+    move("left",3);
+    move("down",18);
+    move("left",3);
+    move("up",18);
+    move("left",3);
+    move("down",18);
+    move("left",3);
+    move("up",18);
+    move("left",3);
+    move("down",18);
+    move("left",3);
+    move("up",18);
+
+    // criss-cross the board in the horizontal
+    move("left",18);
+    move("up",3);
+    move("right",18);
+    move("up",3);
+    move("left",18);
+    move("up",3);
+    move("right",18);
+    move("up",3);
+    move("left",18);
+    move("up",3);
+    move("right",18);
+    move("up",3);
+    move("left",18);
+
+    // criss-cross the board in the horizontal again
+    move("down",3);
+    move("right",18);
+    move("down",3);
+    move("left",18);
+    move("down",3);
+    move("right",18);
+    move("down",3);
+    move("left",18);
+    move("down",3);
+    move("right",18);
+    move("down",3);
+    move("left",18);
+
+    move("right",18);
+    move("up",3);
+    move("left",18);
+    move("up",3);
+    move("right",18);
+    move("up",3);
+    move("left",18);
+    move("up",3);
+    move("right",18);
+    move("up",3);
+    move("left",18);
+    move("up",3);
+  }
+
+    
+  // player-tomb collisions
+  QUnit.test("player-tomb collisions", function( assert ) {
+
+    reset();
+
+    // circle the top left tomb and check collision
+    player.handleInput("right");
+    var result = checkTombCollision(player.x,player.y+20);
+    assert.equal(result, true);
+
+    player.handleInput("right");
+    var result = checkTombCollision(player.x,player.y+20);
+    assert.equal(result, true);
+
+    player.handleInput("right");
+    player.handleInput("down");
+    var result = checkTombCollision(player.x-20,player.y);
+    assert.equal(result, true);
+
+    player.handleInput("down");
+    var result = checkTombCollision(player.x-20,player.y);
+    assert.equal(result, true);
+
+    player.handleInput("down");
+    player.handleInput("left");
+    var result = checkTombCollision(player.x,player.y-20);
+    assert.equal(result, true);
+
+    player.handleInput("left");
+    var result = checkTombCollision(player.x,player.y-20);
+    assert.equal(result, true);
+
+    player.handleInput("left");
+    player.handleInput("up");
+    var result = checkTombCollision(player.x+20,player.y);
+    assert.equal(result, true);
+
+    player.handleInput("up");
+    var result = checkTombCollision(player.x+20,player.y);
+    assert.equal(result, true);
+
+    player.x=360;
+    player.y=360;
+
+    // circle the bottom  right tomb and check collision
+    player.handleInput("left");
+    var result = checkTombCollision(player.x,player.y-20);
+    assert.equal(result, true);
+
+    player.handleInput("left");
+    var result = checkTombCollision(player.x,player.y-20);
+    assert.equal(result, true);
+
+    player.handleInput("left");
+    player.handleInput("up");
+    var result = checkTombCollision(player.x+20,player.y);
+    assert.equal(result, true);
+
+    player.handleInput("up");
+    var result = checkTombCollision(player.x+20,player.y);
+    assert.equal(result, true);
+
+    player.handleInput("up");
+    player.handleInput("right");
+    var result = checkTombCollision(player.x,player.y+20);
+    assert.equal(result, true);
+
+    player.handleInput("right");
+    var result = checkTombCollision(player.x,player.y+20);
+    assert.equal(result, true);
+
+    player.handleInput("right");
+    player.handleInput("down");
+    var result = checkTombCollision(player.x-20,player.y);
+    assert.equal(result, true);
+
+    player.handleInput("down");
+    var result = checkTombCollision(player.x-20,player.y);
+    assert.equal(result, true);
+
+    allSteps.forEach(function(step) {
+      if(step.steppedOn===true) {
+          stepsOn++;
+      }
+    });
+  });
+
+  
+
+  // player-gameboard collisions
+  QUnit.test("player-gameboard collisions", function( assert ) {
+    reset();
+
+    move("right", 20);
+    var result = checkInBounds(player.x,player.y);
+    assert.equal(result, true);
+
+    move("down", 20);
+    var result = checkInBounds(player.x,player.y);
+    assert.equal(result, true);
+
+    move("left", 20);
+    var result = checkInBounds(player.x,player.y);
+    assert.equal(result, true);
+
+    move("up", 20);
+    var result = checkInBounds(player.x,player.y);
+    assert.equal(result, true);
+
+    allSteps.forEach(function(step) {
+      if(step.steppedOn===true) {
+          stepsOn++;
+      }
+    });
+  });
+
+  // player-step collisions
+  QUnit.test("player-step collisions", function( assert ) {
+    reset();
+    var expect = 37;
+    var result = 0;
+
+    allSteps.forEach(function(step) {
+        step.steppedOn = false;
+    });
+
+    move("right", 18);
+    move("down", 18);
+
+    allSteps.forEach(function(step) {
+      if(step.steppedOn===true) {
+        result++;
+      }
+    });
+    assert.equal(result, expect);
+  });
+
+  // player-item collisions
+  QUnit.test("player-item collisions", function( assert ) {
+    coverBoard();
+
+    reset();
+    var expectPlayerItems = 3;
+    var expectGlobalItems = 3;
+    var actual = 0;
+
+    allTombs.forEach(function(tomb) {
+        tomb.surrounded = true;
+    });
+    
+    var sRows = 19;
+    var sCols = 19;
+    for (row = 0; row < sRows; row++) {
+        for (col = 0; col < sCols; col++) {
+          if(player.checkItemCollision(row*20,col*20)) {
+              actual++;
+          }
+        }
+    }
+    
+    // check during the course of the horizontal sweep that all items have been grabbed by the player and all items have been "removed" from the board
+    assert.equal(actual, expectPlayerItems);
+    assert.equal(items.length, expectGlobalItems);
+  });
+
+  // enemy movement/chase player general case
+  QUnit.test("enemy chase player: general case", function( assert ) {
+    reset();
+
+    // enemy 60, 360 + player 0, 0
+    expectedMoves = ["right", "left", "up"];
+    possibleMoves = [];
+    possibleMoves = testEnemy.calculatePossibleMoves(testEnemy.x, testEnemy.y);
+    assert.deepEqual(possibleMoves, expectedMoves);
+
+    testEnemy.x = 360;
+    testEnemy.y = 360;
+    expectedMoves = ["left", "up"];
+    possibleMoves = [];
+    possibleMoves = testEnemy.calculatePossibleMoves(testEnemy.x, testEnemy.y);
+    assert.deepEqual(possibleMoves, expectedMoves);
+
+    testEnemy.x = 240;
+    testEnemy.y = 20;
+    expectedMoves = ["down", "up"];
+    possibleMoves = [];
+    possibleMoves = testEnemy.calculatePossibleMoves(testEnemy.x, testEnemy.y);
+    assert.deepEqual(possibleMoves, expectedMoves);
+
+    testEnemy.x = 40;
+    testEnemy.y = 240;
+    expectedMoves = ["right", "left"];
+    possibleMoves = [];
+    possibleMoves = testEnemy.calculatePossibleMoves(testEnemy.x, testEnemy.y);
+    assert.deepEqual(possibleMoves, expectedMoves);
+  });
+
+  // enemy movement/equidistant 2 corners
+  QUnit.test("enemy chase player: equidistant 2 corners", function( assert ) {
+    reset();
+
+    // enemy opposite corner of a tomb from the player
+    testEnemy.x = 60;
+    testEnemy.y = 60;
+    expectedMoves = ["right", "left", "down", "up"];
+    possibleMoves = [];
+    possibleMoves = testEnemy.calculatePossibleMoves(testEnemy.x, testEnemy.y);
+    // confirm all directions are possible
+    assert.deepEqual(possibleMoves, expectedMoves);
+
+    expectedMoves = ["right", "left", "down", "up"];
+    possibleMoves = testEnemy.calculateBestAxis(possibleMoves);
+    // confirm there is no preference for an axis because it's equidistant in either
+    assert.deepEqual(possibleMoves, expectedMoves);
+
+    expectedMoves = ["left", "up"];
+    possibleMoves = testEnemy.calculateBetweenSameAxis(possibleMoves);
+    // confirm the left/up directions are preferential because they move closer to the player
+    assert.deepEqual(possibleMoves, expectedMoves);
+    assert.equal(possibleMoves.length, 2);
+  });
+
+  // enemy movement/opposite sides
+  QUnit.test("enemy chase player: opposite sides", function( assert ) {
+    reset();
+
+    move("right", 1);
+
+    testEnemy.x = 20;
+    testEnemy.y = 60;
+    expectedMoves = ["right", "left"];
+    possibleMoves = [];
+    possibleMoves = testEnemy.calculatePossibleMoves(testEnemy.x, testEnemy.y);
+    // confirm right-left directions are possible
+    assert.deepEqual(possibleMoves, expectedMoves);
+
+    expectedMoves = ["right", "left"];
+    possibleMoves = testEnemy.calculateBestAxis(possibleMoves);
+    // confirm there is no preference for an axis because there's only 1 available
+    assert.deepEqual(possibleMoves, expectedMoves);
+
+    expectedMoves = [];
+    possibleMoves = testEnemy.calculateBetweenSameAxis(possibleMoves);
+    // confirm the there is no preference within an axis because both move away from player an equal amount
+    assert.deepEqual(possibleMoves, expectedMoves);
+    assert.equal(possibleMoves.length, 0);
+
+    // confirm that the preference is to move to the space that grants the most options, in this case, left
+    expectedMoves = ["right"];
+    possibleMoves = testEnemy.calculatePossibleMoves(testEnemy.x, testEnemy.y);
+    possibleMoves = testEnemy.moveToOpenSpace(possibleMoves);
+    assert.deepEqual(possibleMoves, expectedMoves);
+    assert.equal(possibleMoves.length, 1);
+  });
+  
+  </script>
+
+ 
+</body>
+</html>
